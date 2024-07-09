@@ -38,6 +38,10 @@ public class Main {
             secondDen = Integer.parseInt(secondParts[1]);
         }
 
+        if (secondDen == 0 || firstDen == 0){
+            System.out.println("Работа с невозможными числами.");
+            return;
+        }
         switch (operation) {
             case "+":
                 if (firstDen == secondDen){

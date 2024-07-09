@@ -19,10 +19,24 @@ public class Main {
         String[] secondParts = second.split("/");
 
         int firstNum = Integer.parseInt(firstParts[0]);
-        int firstDen = Integer.parseInt(firstParts[1]);
-
         int secondNum = Integer.parseInt(secondParts[0]);
-        int secondDen = Integer.parseInt(secondParts[1]);
+
+        int firstDen;
+        int secondDen;
+
+        if (firstParts.length == 1){
+            firstDen = 1;
+        }
+        else{
+            firstDen = Integer.parseInt(firstParts[1]);
+        }
+
+        if (secondParts.length == 1){
+            secondDen = 1;
+        }
+        else{
+            secondDen = Integer.parseInt(secondParts[1]);
+        }
 
         switch (operation) {
             case "+":

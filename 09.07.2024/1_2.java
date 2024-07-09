@@ -10,13 +10,17 @@ public class Main {
         public Number(String numberStr){
             String[] parts = numberStr.split("/");
 
-            this.numerator = Integer.parseInt(parts[0]);
+            try {
+                this.numerator = Integer.parseInt(parts[0]);
 
-            if (parts.length == 1){
-                this.denumerator = 1;
-            }
-            else{
-                this.denumerator = Integer.parseInt(parts[1]);
+                if (parts.length == 1){
+                    this.denumerator = 1;
+                }
+                else{
+                    this.denumerator = Integer.parseInt(parts[1]);
+                }
+            } catch (NumberFormatException e) {
+                return;
             }
         }
 
@@ -64,7 +68,6 @@ public class Main {
 
         Scanner in = new Scanner(System.in);
         String expression = in.nextLine();
-
         String[] parts = expression.split(" ");
         String firstPart = parts[0];
         String secondPart = parts[2];
@@ -77,6 +80,7 @@ public class Main {
             System.out.println("Работа с невозможными числами.");
             return;
         }
+
         switch (operation) {
             case "+":
                 addition(first, second);

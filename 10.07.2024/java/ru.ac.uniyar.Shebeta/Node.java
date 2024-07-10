@@ -45,11 +45,21 @@ public class Node {
     }
 
     public void deleteWithName(String nodeName) {
-
+        Node tmp = new Node();
+        for (Node children : childrens){
+            if (Objects.equals(children.getName(), nodeName)){
+                children = tmp;
+            }
+        }
     }
 
     public void deleteWithId(Integer nodeId) {
-
+        Node tmp = new Node();
+        for (Node children : childrens){
+            if (Objects.equals(children.getId(), nodeId)){
+                children = tmp;
+            }
+        }
     }
 
     public void delAll() {

@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Node {
-    private Integer id;
-    private String name;
-    private ArrayList<Node> childrens = new ArrayList();
+    private Integer id = -1;
+    private String name = "no_name";
+    private ArrayList<Node> childrens = new ArrayList<Node>();
 
     public Node(){
         this.name = "no_name";

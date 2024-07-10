@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Node {
-    Integer id;
-    String name;
-    ArrayList<Node> childrens = new ArrayList();
+    private Integer id;
+    private String name;
+    private ArrayList<Node> childrens = new ArrayList();
 
     public Node(){
-
+        this.name = "no_name";
+        this.id = -1;
     }
 
     public Node(String name){

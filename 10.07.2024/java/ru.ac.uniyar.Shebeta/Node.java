@@ -64,7 +64,7 @@ public class Node {
     }
 
     public void delAll() {
-        this.childrens = new ArrayList<>();
+        this.childrens = new ArrayList<Node>();
     }
 
     public void changeName(String newName) {

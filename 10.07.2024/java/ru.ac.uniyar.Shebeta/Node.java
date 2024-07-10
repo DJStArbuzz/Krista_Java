@@ -32,11 +32,11 @@ public class Node {
     }
 
     public void add(Node newNode) {
-        childrens.add(newNode);
+        this.childrens.add(newNode);
     }
 
     public Node findWithName(String nodeName) {
-        for (Node children : childrens){
+        for (Node children : this.childrens){
             if (Objects.equals(children.getName(), nodeName)){
                 return children;
             }
@@ -46,18 +46,18 @@ public class Node {
     }
 
     public void deleteWithName(String nodeName) {
-        for (Node children : childrens){
+        for (Node children : this.childrens){
             if (Objects.equals(children.getName(), nodeName)){
-                childrens.remove(children);
+                this.childrens.remove(children);
                 break;
             }
         }
     }
 
     public void deleteWithId(Integer nodeId) {
-        for (Node children : childrens){
+        for (Node children : this.childrens){
             if (Objects.equals(children.getId(), nodeId)){
-                childrens.remove(children);
+                this.childrens.remove(children);
                 break;
             }
         }

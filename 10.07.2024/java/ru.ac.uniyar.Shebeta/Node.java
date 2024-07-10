@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Node {
+    static Integer currId = 1;
     private Integer id = -1;
     private String name = "no_name";
     private ArrayList<Node> childrens = new ArrayList<Node>();
@@ -15,7 +16,8 @@ public class Node {
 
     public Node(String name){
         this.name = name;
-        this.id = 1;
+        this.id = currId;
+        currId++;
     }
 
     public Integer getId(){
@@ -26,10 +28,22 @@ public class Node {
         return this.name;
     }
 
-
     public ArrayList<Node> getChildrenList() {
         return this.childrens;
     }
+
+    public void setId(Integer idNew){
+        this.id = idNew;
+    }
+
+    public void setName(String nameNew) {
+        this.name = nameNew;
+    }
+
+    public void setChildrenList(ArrayList<Node> childrensNew) {
+        this.childrens = childrensNew;
+    }
+
 
     public void add(Node newNode) {
         this.childrens.add(newNode);
@@ -39,6 +53,9 @@ public class Node {
         for (Node children : this.childrens){
             if (Objects.equals(children.getName(), nodeName)){
                 return children;
+            }
+            else{
+                children.findWithName(nodeName);
             }
         }
         Node tmp = new Node();
@@ -64,7 +81,7 @@ public class Node {
     }
 
     public void delAll() {
-        this.childrens = new ArrayList<Node>();
+        this.childrens.clear();
     }
 
     public void changeName(String newName) {

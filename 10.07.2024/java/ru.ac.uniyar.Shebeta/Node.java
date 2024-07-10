@@ -1,0 +1,62 @@
+package ru.ac.uniyar.Shebeta;
+
+import java.util.ArrayList;
+import java.util.Objects;
+
+public class Node {
+    Integer id;
+    String name;
+    ArrayList<Node> childrens = new ArrayList();
+
+    public Node(){
+
+    }
+
+    public Node(String name){
+        this.name = name;
+        this.id = 1;
+    }
+
+    public Integer getId(){
+        return this.id;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+
+    public ArrayList<Node> getChildrenList() {
+        return this.childrens;
+    }
+
+    public void add(Node newNode) {
+        childrens.add(newNode);
+    }
+
+    public Node findWithName(String nodeName) {
+        for (Node children : childrens){
+            if (Objects.equals(children.getName(), nodeName)){
+                return children;
+            }
+        }
+        Node tmp = new Node();
+        return tmp;
+    }
+
+    public void deleteWithName(String nodeName) {
+
+    }
+
+    public void deleteWithId(Integer nodeId) {
+
+    }
+
+    public void delAll() {
+        childrens = new ArrayList<>();
+    }
+
+    public void changeName(String newName) {
+        this.name = newName;
+    }
+}

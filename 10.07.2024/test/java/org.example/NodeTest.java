@@ -45,7 +45,25 @@ public class NodeTest {
 
         // findNode - проверка на наличие дочернего узла
         assertEquals(node1, mainNode.findWithName(node1.getName()), "Дочерний узел не был найден");
-        assertNotEquals(node4, mainNode.findWithName(node4.getName()), "'НЕ' дочерний узел является дочерним");
+    }
+
+    // Проверка поиска дочернего узла по имени
+    @Test
+    void notFindNodeByName(){
+        Node mainNode = new Node("mainNode");
+
+        Node node1 = new Node("node1");
+        Node node2 = new Node("node2");
+        Node node3 = new Node("node3");
+        Node node4 = new Node("node4");
+
+        mainNode.add(node1);
+        mainNode.add(node2);
+        mainNode.add(node3);
+
+        Node tmp = mainNode.findWithName(node4.getName());
+        // findNode - проверка на наличие дочернего узла
+        assertEquals("no_name", tmp.getName(), "'НЕ' дочерний узел является дочерним");
     }
 
     // Проверка удаления дочернего узла по имени или идентификатору
@@ -63,9 +81,10 @@ public class NodeTest {
         mainNode.add(node3);
 
         // delete - удаление дочернего узла
-        Integer prevSize = mainNode.getChildrenList().size();
         mainNode.deleteWithName(node1.getName());
-        assertEquals(prevSize - 1, mainNode.getChildrenList().size(), "Дочерний узел не был удален");
+        assertEquals(2, mainNode.getChildrenList().size(), "Дочерний узел не был удален");
+        assertEquals(node2, mainNode.getChildrenList().get(0), "Удален не тот узел");
+        assertEquals(node3, mainNode.getChildrenList().get(1));
     }
 
     @Test

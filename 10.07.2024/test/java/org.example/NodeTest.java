@@ -84,7 +84,7 @@ public class NodeTest {
         mainNode.deleteWithName(node1.getName());
         assertEquals(2, mainNode.getChildrenList().size(), "Дочерний узел не был удален");
         assertEquals(node2.getName(), mainNode.getChildrenList().get(0).getName(), "Удален не тот узел");
-        assertEquals(node3.getName(), mainNode.getChildrenList().get(1).getName()t, "Удален не тот узел");
+        assertEquals(node3.getName(), mainNode.getChildrenList().get(1).getName(), "Удален не тот узел");
     }
 
     @Test

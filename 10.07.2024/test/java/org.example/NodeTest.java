@@ -39,12 +39,13 @@ public class NodeTest {
         Node node3 = new Node("node3");
         Node node4 = new Node("node4");
 
+        node2.add(node3);
+        node1.add(node2);
+
         mainNode.add(node1);
-        mainNode.add(node2);
-        mainNode.add(node3);
 
         // findNode - проверка на наличие дочернего узла
-        assertEquals(node1, mainNode.findWithName(node1.getName()), "Дочерний узел не был найден");
+        assertEquals(node3.getName(), mainNode.findWithName(node3.getName()).getName(), "Дочерний узел не был найден");
     }
 
     // Проверка поиска дочернего узла по имени

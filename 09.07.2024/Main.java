@@ -3,38 +3,6 @@ package ru.ac.uniyar.Shebeta;
 import java.util.Scanner;
 
 public class Main {
-    public static void addition(Number first, Number second){
-        if (first.getDen()  == second.getDen()){
-            System.out.println("Результат: " + (first.getNum() + second.getNum()) + "/" + first.getDen() );
-        }
-        else{
-            System.out.println("Результат: " + (first.getNum() * second.getDen()
-                    + second.getNum() * first.getDen()) + "/" + first.getDen() * second.getDen());
-        }
-    }
-
-    public static void subtraction(Number first, Number second){
-        if (first.getDen() == second.getDen()){
-            System.out.println("Результат: " + (first.getNum() - second.getNum()) + "/" + first.getDen());
-        }
-        else{
-            System.out.println("Результат: " + (first.getNum() * second.getDen()
-                    - second.getNum() * first.getDen()) + "/" + first.getDen() * second.getDen());
-        }
-    }
-
-    public static void multiplication(Number first, Number second){
-        System.out.println("Результат: " + (first.getNum() * second.getNum()) + "/" + (first.getDen() * second.getDen()) );
-    }
-
-    public static void division(Number first, Number second){
-        if (second.getNum() == 0){
-            System.out.println("Деление на 0.");
-        }
-        else{
-            System.out.println("Результат: " + (first.getNum() * second.getDen()) + "/" + (first.getDen() * second.getNum()) );
-        }
-    }
 
     public static void main(String[] args)
     {
@@ -63,18 +31,24 @@ public class Main {
             return;
         }
 
+        System.out.print("Результат: ");
+        String res;
         switch (operation) {
             case "+":
-                addition(first, second);
+                res = Calculator.addition(first, second);
+                System.out.println(res);
                 break;
             case "-":
-                subtraction(first, second);
+                res = Calculator.subtraction(first, second);
+                System.out.println(res);
                 break;
             case "*":
-                multiplication(first, second);
+                res = Calculator.multiplication(first, second);
+                System.out.println(res);
                 break;
             case "/":
-                division(first, second);
+                res = Calculator.division(first, second);
+                System.out.println(res);
                 break;
         }
     }

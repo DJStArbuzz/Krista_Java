@@ -1,5 +1,9 @@
 package ru.ac.uniyar.Shebeta;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -45,6 +49,10 @@ public class Node {
         this.level = newLevel;
     }
 
+    public void changeName(String newName) {
+        this.name = newName;
+    }
+
     public void add(Node newNode) {
         newNode.changeLevel(this.level + 1);
         this.childrens.add(newNode);
@@ -88,11 +96,16 @@ public class Node {
         this.childrens.clear();
     }
 
-    public void changeName(String newName) {
-        this.name = newName;
+    public void print_tree() {
+        String space = "  ";
+        String repeated = space.repeat(this.level);
+        System.out.println((repeated + this.name));
+        for (Node child : this.childrens) {
+            child.print_tree();
+        }
     }
 
-    public String printAllInfo(Integer level){
+    public String printAllInfoHTML(Integer level){
         String res = "";
         if (level == this.level){
             res = "<!DOCTYPE HTML>\n" +
@@ -109,7 +122,7 @@ public class Node {
             res += "<ul>";
         }
         for (Node child : this.childrens){
-            res += child.printAllInfo(level);
+            res += child.printAllInfoHTML(level);
         }
 
         if (this.childrens.size() != 0){
@@ -122,7 +135,20 @@ public class Node {
             res += "\n</body>\n" +
                     "</html>";
         }
+        return res;
+    }
 
-return res;
+    public void printAllInfoJSON() throws IOException {
+        String fileName = "test.json";
+        ObjectMapper mapper = new ObjectMapper();
+        Node curr = this;
+        mapper.writerWithDefaultPrettyPrinter().writeValue(new File(fileName), curr);
+    }
+
+    public void readJson() throws IOException{
+        Node object = new ObjectMapper().readValue(new File("test.json"), Node.class);
+        this.name = object.name;
+        this.childrens = object.childrens;
+
     }
 }

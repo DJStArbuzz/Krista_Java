@@ -1,5 +1,15 @@
 package ru.ac.uniyar.Shebeta;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import java.util.Iterator;
+import java.util.Scanner;
+
 public class Main {
     public static void problemWithCreation(){
         System.out.println("Создание дерева.");
@@ -172,7 +182,7 @@ public class Main {
         System.out.println("\n-------------------");
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         //System.out.println("Проверка всех основных операций\n");
 
         //problemWithCreation();
@@ -200,8 +210,17 @@ public class Main {
         tmp4.add(tmp5);
         tmp3.add(tmp6);
 
-        String res = main.printAllInfo(main.getLevel());
+        FileWriter writer = new FileWriter("htmlTest.html");
+
+        String res = main.printAllInfoHTML(main.getLevel());
+        writer.write(res);
+        writer.close();
         System.out.println(res);
 
+        main.printAllInfoJSON();
+
+        Node newR = new Node();
+        newR.readJson();
+        newR.print_tree();
     }
 }

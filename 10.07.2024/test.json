@@ -1,0 +1,36 @@
+{
+  "id" : 0,
+  "name" : "main",
+  "level" : 0,
+  "childrenList" : [ {
+    "id" : 1,
+    "name" : "son1",
+    "level" : 1,
+    "childrenList" : [ {
+      "id" : 3,
+      "name" : "grandson1",
+      "level" : 2,
+      "childrenList" : [ {
+        "id" : 6,
+        "name" : "grand-grandson2",
+        "level" : 3,
+        "childrenList" : [ ]
+      } ]
+    }, {
+      "id" : 4,
+      "name" : "grandson2",
+      "level" : 2,
+      "childrenList" : [ {
+        "id" : 5,
+        "name" : "grand-grandson1",
+        "level" : 3,
+        "childrenList" : [ ]
+      } ]
+    } ]
+  }, {
+    "id" : 2,
+    "name" : "son2",
+    "level" : 1,
+    "childrenList" : [ ]
+  } ]
+}

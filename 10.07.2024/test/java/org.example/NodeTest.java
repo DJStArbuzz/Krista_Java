@@ -39,13 +39,12 @@ public class NodeTest {
         Node node3 = new Node("node3");
         Node node4 = new Node("node4");
 
-        node2.add(node3);
-        node1.add(node2);
-
         mainNode.add(node1);
+        mainNode.add(node2);
+        mainNode.add(node3);
 
         // findNode - проверка на наличие дочернего узла
-        assertEquals(node3.getName(), mainNode.findWithName(node3.getName()).getName(), "Дочерний узел не был найден");
+        assertEquals(node1, mainNode.findWithName(node1.getName()), "Дочерний узел не был найден");
     }
 
     // Проверка поиска дочернего узла по имени
@@ -132,6 +131,36 @@ public class NodeTest {
         node.changeName("node2");
         assertEquals("node2", node.getName(), "Наименование не поменялось");
         assertNotEquals("node1", node.getName(), "Наименование не поменялось");
+    }
 
+    @Test
+    void checkHTMLcode(){
+        Node main = new Node("main");
+        Node tmp1 = new Node("son1");
+        Node tmp2 = new Node("son2");
+        Node tmp3 = new Node("grandson1");
+        Node tmp4 = new Node("grandson2");
+        Node tmp5 = new Node("grand-grandson1");
+        Node tmp6 = new Node("grand-grandson2");
+
+        main.add(tmp1);
+        main.add(tmp2);
+
+        tmp1.add(tmp3);
+        tmp1.add(tmp4);
+
+        tmp4.add(tmp5);
+        tmp3.add(tmp6);
+
+        String test = main.printAllInfoHTML(main.getLevel());
+        assertEquals("<!DOCTYPE HTML>\n" +
+                "<html>\n" +
+                "<head>\n" +
+                "<title>Маркированный список</title>\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "<li>main<ul><li>son1<ul><li>grandson1<ul><li>grand-grandson2</li></ul></li><li>grandson2<ul><li>grand-grandson1</li></ul></li></ul></li><li>son2</li></ul></li>\n" +
+                "</body>\n" +
+                "</html>", test, "Предполагаемая страница не совпадает с итоговой.");
     }
 }

@@ -183,14 +183,6 @@ public class Main {
         //problemWithChangeName_Id();
         //System.out.println("\n-------------------");
 
-        String res = "<!DOCTYPE HTML>\n" +
-                "<html>\n" +
-                "\n" +
-                " <head>\n" +
-                "  <title>Маркированный список</title>\n" +
-                " </head>\n" +
-                "\n" +
-                " <body>\n";
         Node main = new Node("main");
         Node tmp1 = new Node("son1");
         Node tmp2 = new Node("son2");
@@ -208,12 +200,7 @@ public class Main {
         tmp4.add(tmp5);
         tmp3.add(tmp6);
 
-        String tmp = main.printAllInfo();
-        res += tmp;
-
-        res += " </body>\n" +
-                "\n" +
-                "</html>";
+        String res = main.printAllInfo(main.getLevel());
         System.out.println(res);
 
     }

@@ -92,15 +92,24 @@ public class Node {
         this.name = newName;
     }
 
-    public String printAllInfo(){
+    public String printAllInfo(Integer level){
+        String res = "";
+        if (level == this.level){
+            res = "<!DOCTYPE HTML>\n" +
+                    "<html>\n" +
+                    "<head>\n" +
+                    "<title>Маркированный список</title>\n" +
+                    "</head>\n" +
+                    "<body>\n";
+        }
 
-        String res = ("<li>" + this.name);
+        res += ("<li>" + this.name);
 
         if (this.childrens.size() != 0){
             res += "<ul>";
         }
         for (Node child : this.childrens){
-            res += child.printAllInfo();
+            res += child.printAllInfo(level);
         }
 
         if (this.childrens.size() != 0){
@@ -108,6 +117,12 @@ public class Node {
         }
 
         res += "</li>";
+
+        if (level == this.level){
+            res += "\n</body>\n" +
+                    "</html>";
+        }
+
 return res;
     }
 }

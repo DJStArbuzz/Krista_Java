@@ -8,6 +8,7 @@ public class Node {
     private Integer id = -1;
     private String name = "no_name";
     private ArrayList<Node> childrens = new ArrayList<Node>();
+    private Integer level = 0;
 
     public Node(){
         this.name = "no_name";
@@ -28,6 +29,10 @@ public class Node {
         return this.name;
     }
 
+    public Integer getLevel() {
+        return this.level;
+    }
+
     public ArrayList<Node> getChildrenList() {
         return this.childrens;
     }
@@ -36,8 +41,16 @@ public class Node {
         this.id = idNew;
     }
 
+    public void changeLevel(Integer newLevel) {
+        this.level = newLevel;
+    }
+
     public void add(Node newNode) {
+        newNode.changeLevel(this.level + 1);
         this.childrens.add(newNode);
+        for (Node child : newNode.getChildrenList()){
+            child.changeLevel(newNode.level + 1);
+        }
     }
 
     public Node findWithName(String nodeName) {
@@ -77,5 +90,24 @@ public class Node {
 
     public void changeName(String newName) {
         this.name = newName;
+    }
+
+    public String printAllInfo(){
+
+        String res = ("<li>" + this.name);
+
+        if (this.childrens.size() != 0){
+            res += "<ul>";
+        }
+        for (Node child : this.childrens){
+            res += child.printAllInfo();
+        }
+
+        if (this.childrens.size() != 0){
+            res += "</ul>";
+        }
+
+        res += "</li>";
+return res;
     }
 }

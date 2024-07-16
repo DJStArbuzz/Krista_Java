@@ -173,13 +173,48 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        System.out.println("Проверка всех основных операций\n");
+        //System.out.println("Проверка всех основных операций\n");
 
-        problemWithCreation();
-        problemWithAddition();
-        problemWithFind();
-        problemWithDelete();
-        problemWithAllDelete();
-        problemWithChangeName_Id();
+        //problemWithCreation();
+        //problemWithAddition();
+        //problemWithFind();
+        //problemWithDelete();
+        //problemWithAllDelete();
+        //problemWithChangeName_Id();
+        //System.out.println("\n-------------------");
+
+        String res = "<!DOCTYPE HTML>\n" +
+                "<html>\n" +
+                "\n" +
+                " <head>\n" +
+                "  <title>Маркированный список</title>\n" +
+                " </head>\n" +
+                "\n" +
+                " <body>\n";
+        Node main = new Node("main");
+        Node tmp1 = new Node("son1");
+        Node tmp2 = new Node("son2");
+        Node tmp3 = new Node("grandson1");
+        Node tmp4 = new Node("grandson2");
+        Node tmp5 = new Node("grand-grandson1");
+        Node tmp6 = new Node("grand-grandson2");
+
+        main.add(tmp1);
+        main.add(tmp2);
+
+        tmp1.add(tmp3);
+        tmp1.add(tmp4);
+
+        tmp4.add(tmp5);
+        tmp3.add(tmp6);
+
+        String tmp = main.printAllInfo();
+        res += tmp;
+
+        res += " </body>\n" +
+                "\n" +
+                "</html>";
+        System.out.println(res);
+
     }
 }

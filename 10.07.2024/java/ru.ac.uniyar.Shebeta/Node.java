@@ -13,6 +13,7 @@ public class Node {
     private String name = "no_name";
     private ArrayList<Node> childrens = new ArrayList<Node>();
     private Integer level = 0;
+    private Integer prevNode = -1;
 
     public Node(){
         this.name = "no_name";
@@ -37,12 +38,20 @@ public class Node {
         return this.level;
     }
 
+    public Integer getPrevNode(){
+        return this.prevNode;
+    }
+
     public ArrayList<Node> getChildrenList() {
         return this.childrens;
     }
 
     public void setId(Integer idNew){
         this.id = idNew;
+    }
+
+    public void setPrevId(Integer idNew){
+        this.prevNode = idNew;
     }
 
     public void changeLevel(Integer newLevel) {
@@ -107,16 +116,18 @@ public class Node {
 
     public String printAllInfoHTML(Integer level){
         String res = "";
-        if (level == this.level){
-            res = "<!DOCTYPE HTML>\n" +
-                    "<html>\n" +
-                    "<head>\n" +
-                    "<title>Маркированный список</title>\n" +
-                    "</head>\n" +
-                    "<body>\n";
-        }
+        //if (level == this.level){
+        //    res = "<!DOCTYPE HTML>\n" +
+        //            "<html>\n" +
+        //            "<head>\n" +
+        //            "<title>Маркированный список</title>\n" +
+        //            "</head>\n" +
+        //            "<body>\n";
+        //}
 
-        res += ("<li>" + this.name);
+        res += ("<li>" + this.name + " <a href=\"edit/" + this.id + "\">Редактировать</a>");
+
+        res += (" <a href=\"create/" + this.id + "\">Добавить узел</a>");
 
         if (this.childrens.size() != 0){
             res += "<ul>";
@@ -131,10 +142,10 @@ public class Node {
 
         res += "</li>";
 
-        if (level == this.level){
-            res += "\n</body>\n" +
-                    "</html>";
-        }
+        //if (level == this.level){
+        //    res += "\n</body>\n" +
+        //            "</html>";
+        //}
         return res;
     }
 

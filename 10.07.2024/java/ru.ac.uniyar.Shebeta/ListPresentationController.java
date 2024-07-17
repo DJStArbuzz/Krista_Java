@@ -72,7 +72,7 @@ public class ListPresentationController {
      * @return перенаправление на основную страницу со списком.
      */
     @POST
-    @Path("add_random_item")
+    @Path("new_elem")
     @Produces("text/html")
     public Response addRandomItem() {
         list.add("zzz");
@@ -127,6 +127,8 @@ public class ListPresentationController {
             throw new IllegalStateException("Ошибка построения URI для перенаправления");
         }
     }
+
+
 
     /**
      * Пример вывода вложенного списка.

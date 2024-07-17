@@ -7,14 +7,14 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 /**
- * Контроллер отвечающий за представление списка.
+ * Контроллер отвечающий за представление дерева.
  */
 @Path("/")
 public class TreePresentationController {
     private final List<Node> list;
 
     /**
-     * Запоминает список, с которым будет работать.
+     * Запоминает деревья, с которым будет работать.
      * @param list список, с которым будет работать контроллер.
      */
     public TreePresentationController(List<Node> list) {
@@ -54,8 +54,8 @@ public class TreePresentationController {
         }
         result += "    </ul>" +
                 "      <br/>" +
-                "      <form method=\"post\" action=\"add_random_item\">" +
-                "        <input type=\"submit\" value=\"Add random item\"/>" +
+                "      <form method=\"post\" action=\"new_elem\">" +
+                "        <input type=\"submit\" value=\"Add new Node\"/>" +
                 "      </form>" +
                 "  </body>" +
                 "</html>";
@@ -68,10 +68,10 @@ public class TreePresentationController {
      * @return перенаправление на основную страницу со списком.
      */
     @POST
-    @Path("add_random_item")
+    @Path("new_elem")
     @Produces("text/html")
     public Response addRandomItem() {
-        Node tmp = new Node("random_elem");
+        Node tmp = new Node("new_elem");
         tmp.setId(list.size());
         list.add(tmp);
         try {
@@ -82,7 +82,7 @@ public class TreePresentationController {
     }
 
     /**
-     * Выводит страничку для редактирования одного элемента.
+     * Выводит страничку для редактирования узла.
      * @param itemId индекс элемента списка.
      * @return страничка для редактирования одного элемента.
      */
@@ -94,10 +94,10 @@ public class TreePresentationController {
         String result =
                 "<html>" +
                         "  <head>" +
-                        "    <title>Редактирование элемента списка</title>" +
+                        "    <title>Редактирование узла дерева</title>" +
                         "  </head>" +
                         "  <body>" +
-                        "    <h1>Редактирование элемента списка</h1>" +
+                        "    <h1>Редактирование узла дерева</h1>" +
                         "    <form method=\"post\" action=\"/edit/" + itemId + "\">" +
                         "      <p>Значение</p>" +
                         "      <input type=\"text\" name=\"value\" value=\"" + listItem.getName() +"\"/>" +
@@ -110,7 +110,7 @@ public class TreePresentationController {
     }
 
     /**
-     * Редактирует элемент списка на основе полученных данных.
+     * Редактирует узел дерева на основе полученных данных.
      * @param itemId индекс элемента списка.
      * @return перенаправление на основную страницу со списком.
      */
@@ -120,8 +120,7 @@ public class TreePresentationController {
     public Response editItem(@PathParam("id") int itemId, @FormParam("value") Node itemValue) {
         itemValue.setId(itemId);
         list.set(itemId, itemValue);
-        System.out.println(itemValue.getId());
-        System.out.println(itemId);
+
         try {
             return Response.seeOther(new URI("/")).build();
         } catch (URISyntaxException e) {
@@ -171,10 +170,60 @@ public class TreePresentationController {
         }
     }
 
+    /**
+     * Выводит страничку для удаления одного узла.
+     * @param itemId индекс элемента списка.
+     * @return страничка для редактирования одного элемента.
+     */
+    @GET
+    @Path("/delete/{id}")
+    @Produces("text/html")
+    public String getDeletePage(@PathParam("id") int itemId) {
+        Node listItem = list.get(itemId);
+        String result =
+                "<html>" +
+                        "  <head>" +
+                        "    <title>Удаление элемента списка</title>" +
+                        "  </head>" +
+                        "  <body>" +
+                        "    <h1>Удаление элемента списка</h1>" +
+                        "    <form method=\"post\" action=\"/delete/" + itemId + "\">" +
+                        "      <p>Удалить " + listItem.getName() + "?</p>" +
+                        "      <input type=\"text\" name=\"value\" value=\"" + listItem.getName() +"\"/>" +
+                        "      <input type=\"submit\"/>";
+        result +=
+                "            </form>" +
+                        "  </body>" +
+                        "</html>";
+        return result;
+    }
 
+    /**
+     * Редактирует элемент списка на основе полученных данных.
+     * @param itemId индекс элемента списка.
+     * @return перенаправление на основную страницу со списком.
+     */
+    @POST
+    @Path("/delete/{id}")
+    @Produces("text/html")
+    public Response deleteItem(@PathParam("id") int itemId, @FormParam("value") Node itemValue) {
+        Node tmp = new Node();
+        tmp.setId(-100);
+        itemValue.delAll();
+        tmp.setPrevId(0);
+        list.set(itemId, tmp);
 
+        System.out.println(itemId);
 
-
+        for (var c : list){
+            System.out.println(c.getName());
+        }
+        try {
+            return Response.seeOther(new URI("/")).build();
+        } catch (URISyntaxException e) {
+            throw new IllegalStateException("Ошибка построения URI для перенаправления");
+        }
+    }
 
     /**
      * Пример вывода вложенного списка.

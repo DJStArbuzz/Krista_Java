@@ -129,6 +129,8 @@ public class Node {
 
         res += (" <a href=\"create/" + this.id + "\">Добавить узел</a>");
 
+        res += (" <a href=\"delete/" + this.id + "\">Удалить узел</a>");
+
         if (this.childrens.size() != 0){
             res += "<ul>";
         }

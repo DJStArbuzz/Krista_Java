@@ -3,154 +3,175 @@ package ru.ac.uniyar.Shebeta;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class Node {
     static Integer currId = 0;
-    private Integer id = -1;
-    private String name = "no_name";
-    private ArrayList<Node> childrens = new ArrayList<Node>();
-    private Integer level = 0;
+    private Integer id;
+    private String name;
+    private ArrayList<Node> children = new ArrayList();
+    private Integer Level = 0;
     private Integer prevNode = -1;
 
-    public Node(){
-        this.name = "no_name";
+    public Node() {
+        this.name = "bad_name";
         this.id = -1;
-    }
-
-    public Node(String name){
-        this.name = name;
-        this.id = currId;
-        currId++;
-    }
-
-    public Integer getId(){
-        return this.id;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public Integer getLevel() {
-        return this.level;
     }
 
     public Integer getPrevNode(){
         return this.prevNode;
     }
 
-    public ArrayList<Node> getChildrenList() {
-        return this.childrens;
-    }
-
-    public void setId(Integer idNew){
-        this.id = idNew;
-    }
-
     public void setPrevId(Integer idNew){
         this.prevNode = idNew;
     }
 
-    public void changeLevel(Integer newLevel) {
-        this.level = newLevel;
+    public void setLevel(Integer level) {
+        Level = level;
     }
 
-    public void changeName(String newName) {
-        this.name = newName;
+    public ArrayList<Node> getChildren() {
+        return children;
+    }
+
+    public void setChildren(ArrayList<Node> children) {
+        this.children = children;
+    }
+
+    public Node(String name) {
+        this.name = name;
+        this.id = currId;
+        currId++;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getId() {
+        return this.id;
+    }
+
+    public Integer getLevel() {
+        return this.Level;
+    }
+
+    public void changeLevel(Integer newLevel) {
+        this.Level = newLevel;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void add(Node newNode) {
-        newNode.changeLevel(this.level + 1);
-        this.childrens.add(newNode);
-        for (Node child : newNode.getChildrenList()){
-            child.changeLevel(newNode.level + 1);
-        }
+        newNode.changeLevel(this.Level + 1);
+        this.children.add(newNode);
+
     }
 
-    public Node findWithName(String nodeName) {
-        Node result = new Node();
-        for (Node children : this.childrens){
-            if (Objects.equals(children.getName(), nodeName)){
-                result = children;
-            }
-            else{
-                result = children.findWithName(nodeName);
+    public Node find_by_name(String node_name) {
+        if(this.getName().equals(node_name))
+        {
+            return this;
+        }
+        for (Node child : this.children) {
+            Node tmp = child.find_by_name(node_name);
+            if(tmp != null)
+            {
+                return tmp;
             }
         }
-        return result;
+        return null;
     }
 
-    public void deleteWithName(String nodeName) {
-        for (Node children : this.childrens){
-            if (Objects.equals(children.getName(), nodeName)){
-                this.childrens.remove(children);
+    public Node find_by_id(int node_id) {
+        if(this.getId().equals(node_id))
+        {
+            return this;
+        }
+        for (Node child : this.children) {
+            Node tmp = child.find_by_id(node_id);
+            if(tmp != null)
+            {
+                return tmp;
+            }
+        }
+        return null;
+    }
+
+    public void changename(String new_name) {
+        this.name = new_name;
+    }
+
+    public void delete_all() {
+        this.children = new ArrayList<Node>();
+    }
+
+    public void delete_by_id(Integer Id) {
+        for (Node child : children) {
+            if (child.getId().equals(Id)) {
+                this.children.remove(child);
                 break;
             }
-        }
-    }
-
-    public void deleteWithId(Integer nodeId) {
-        for (Node children : this.childrens){
-            if (Objects.equals(children.getId(), nodeId)){
-                this.childrens.remove(children);
-                break;
+            else
+            {
+                child.delete_by_id(Id);
             }
         }
     }
 
-    public void delAll() {
-        this.childrens.clear();
+    public void delete_by_name(String name) {
+        for (Node child : children) {
+            if (child.getName().equals(name)) {
+                this.children.remove(child);
+                break;
+            }
+            else
+            {
+                child.delete_by_name(name);
+            }
+        }
     }
 
     public void print_tree() {
         String space = "  ";
-        String repeated = space.repeat(this.level);
+        String repeated = space.repeat(this.Level);
         System.out.println((repeated + this.name));
-        for (Node child : this.childrens) {
+        for (Node child : this.children) {
             child.print_tree();
         }
     }
 
-    public String printAllInfoHTML(Integer level){
-        String res = "";
-        //if (level == this.level){
-        //    res = "<!DOCTYPE HTML>\n" +
-        //            "<html>\n" +
-        //            "<head>\n" +
-        //            "<title>Маркированный список</title>\n" +
-        //            "</head>\n" +
-        //            "<body>\n";
-        //}
-
-        res += ("<li>" + this.name + " <a href=\"edit/" + this.id + "\">Редактировать</a>");
-
-        res += (" <a href=\"create/" + this.id + "\">Добавить узел</a>");
-
-        res += (" <a href=\"delete/" + this.id + "\">Удалить узел</a>");
-
-        if (this.childrens.size() != 0){
-            res += "<ul>";
-        }
-        for (Node child : this.childrens){
-            res += child.printAllInfoHTML(level);
-        }
-
-        if (this.childrens.size() != 0){
-            res += "</ul>";
+    public String print_tree_to_HTML(Integer level) {
+        String res = "<ul>";
+        res+="<li>";
+        res+=this.name + " <a href=\"edit/" + this.getId() + "\">Редактировать</a>" + " <a href=\"delete/" + this.getId() + "\">Удалить</a>";
+        for (Node child : this.children){
+            res += child.print_tree_to_HTML(level);
         }
 
         res += "</li>";
-
-        //if (level == this.level){
-        //    res += "\n</body>\n" +
-        //            "</html>";
-        //}
+        res+="</ul>";
         return res;
     }
-
+    public void print_to_HTMLfile(Node head)
+    {
+        try {
+            FileWriter file_editer = new FileWriter("test.html");
+            String res = print_tree_to_HTML(head.getLevel());
+            file_editer.write(res);
+            file_editer.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public void printAllInfoJSON() throws IOException {
         String fileName = "test.json";
         ObjectMapper mapper = new ObjectMapper();
@@ -161,7 +182,9 @@ public class Node {
     public void readJson() throws IOException{
         Node object = new ObjectMapper().readValue(new File("test.json"), Node.class);
         this.name = object.name;
-        this.childrens = object.childrens;
-
+        this.children = object.children;
+        this.Level = object.Level;
     }
+
+    public ArrayList<Node> getChildrenList() {return this.children; }
 }

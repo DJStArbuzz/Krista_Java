@@ -70,7 +70,7 @@ public class Main {
         testNodeMain.add(testNodeTmp1);
 
         System.out.print("Если узел есть в дереве: ");
-        Node goodTest = testNodeMain.findWithName(testNodeTmp2.getName());
+        Node goodTest = testNodeMain.find_by_name(testNodeTmp2.getName());
         System.out.println("имя - " + goodTest.getName() +
                 ", id - " + goodTest.getId());
         System.out.println("Если узел есть, то передается вся информация о нем.");
@@ -78,7 +78,7 @@ public class Main {
                 "(поиск не только на первом уровне).\n");
 
         System.out.print("Если узла в дереве нет: ");
-        Node badTest = testNodeMain.findWithName(testNodeTmp3.getName());
+        Node badTest = testNodeMain.find_by_name(testNodeTmp3.getName());
         System.out.println("имя - " + badTest.getName() +
                 ", id - " + badTest.getId());
         System.out.println("Если узел не находится, то мы создаем 'сломанный' узел\n" +
@@ -109,20 +109,11 @@ public class Main {
         }
 
         System.out.println("\n\nУдалим №1 по имени, а №2 по id.");
-        testNodeMain.deleteWithName(testNodeTmp1.getName());
-        testNodeMain.deleteWithId(testNodeTmp2.getId());
+        testNodeMain.delete_by_id(testNodeTmp2.getId());
         System.out.println("Итого дочерних узлов у корня осталось - " + testNodeMain.getChildrenList().size());
         System.out.print("Дочерние корни: ");
         for (Node children : testNodeMain.getChildrenList()){
             System.out.print(children.getName() + ", ");
-        }
-
-        System.out.println("\n\nПопробуем удалить не дочерний узел " + testNodeTmp4.getName());
-        testNodeMain.deleteWithName(testNodeTmp4.getName());
-        System.out.println("Итого дочерних узлов у корня осталось - " + testNodeMain.getChildrenList().size());
-        System.out.print("Дочерние корни: ");
-        for (Node children : testNodeMain.getChildrenList()){
-            System.out.print(children.getName() + " ");
         }
 
         System.out.println("\n\n-------------------");
@@ -150,7 +141,7 @@ public class Main {
         }
 
         System.out.println("\n\nОчистим список дочерних узлов корня.");
-        testNodeMain.delAll();
+        testNodeMain.delete_all();
         System.out.println("Новый размер: " + testNodeMain.getChildrenList().size());
 
         System.out.println("\n-------------------");
@@ -174,7 +165,7 @@ public class Main {
         }
 
         System.out.println("\n\nПоменяем имя и id главному узлу.");
-        testNodeMain.changeName("AbsoluteMain");
+        testNodeMain.setName("AbsoluteMain");
         testNodeMain.setId(1000);
         System.out.println("Имя - " + testNodeMain.getName() +
                 ", id - " + testNodeMain.getId() +
@@ -212,7 +203,7 @@ public class Main {
 
         FileWriter writer = new FileWriter("htmlTest.html");
 
-        String res = main.printAllInfoHTML(main.getLevel());
+        String res = main.print_tree_to_HTML(main.getLevel());
         writer.write(res);
         writer.close();
         System.out.println(res);

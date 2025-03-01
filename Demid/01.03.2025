@@ -1,0 +1,59 @@
+public class Main {
+    public static void main(String[] args) {
+        try {
+            int a = 21;
+            int b = 0;
+            double c = a / b;
+        }  catch (ArithmeticException e){
+            System.out.println("no goida");
+        } catch (ArrayIndexOutOfBoundsException v) {
+            System.out.println("aba");
+        }
+        finally {
+            System.out.println("d");
+        }
+
+
+    }
+}
+
+// final class - запрет на наследование
+interface Figure{
+    String color = "red";
+
+    public double area();
+}
+
+class Rectangle implements Figure{
+    private int width;
+    private int height;
+
+    Rectangle(int width, int height){
+        this.width = width;
+        this.height = height;
+    }
+
+    public double area(){
+        return this.width * this.height;
+    }
+
+    public String toString(){
+        return "I am rectangle with " + this.color + " color";
+    }
+}
+/*
+*abstract class A{
+    abstract void callme();
+
+    void callmetoo(){
+        System.out.println("I will be back");
+    }
+}
+
+class B extends A{
+    void callMe(){
+        System.out.println("assas");
+    }
+}
+*
+* */

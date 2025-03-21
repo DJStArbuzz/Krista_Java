@@ -1,0 +1,347 @@
+/*
+Добрый вечер!
+Завтра на ООП мы будем с вами наследовать классы, и я хочу сразу расписать вам домашнее задание на 22.03 (8.03 и 15.03, напомню, не занимаемся)
+Необходимо будет реализовать последовательную иерархию из 3 классов
+(абстрактные классы не учитываются),
+учитывая все рассказанное на 1 паре и завтра.
+Каждый не менее 3 собственных атрибутов и 5 собственных методов)
+Выбор тематики зависит лишь от полета Вашей фантазии. Соблюдение code-style, разумеется, обязательно
+Прошу учитывать, что это пока не лабораторная работа, а лишь подготовка к ней (но проверю у всех))
+Желаю успехов и жду завтра.
+ */
+
+public class Mains {
+    public static void main(String[] args) {
+        // Создаем объекты
+        Device tmp = new Device("brand", "model", 0);
+        Smartphone smartphone = new Smartphone("Apple", "iPhone 15", 999.99, "iOS", 4000, true, false, true, false);
+        LaptopComputer laptop = new LaptopComputer("Dell", "XPS 15", 1499.99, "Intel i7", 16, 512, false);
+        GamingLaptop gamingLaptop = new GamingLaptop("Asus", "ROG Zephyrus", 2499.99, "AMD Ryzen 9", 32, 1000,
+                "NVIDIA RTX 3080", true, 165.0, false);
+
+
+        // Device
+        tmp.displayInfo();
+        tmp.turnOff();
+        tmp.turnOn();
+        System.out.println(tmp.getStatus());
+
+        // Smartphone
+        smartphone.turnOn();
+        smartphone.makeCall("123-456-7890");
+        smartphone.checkBattery();
+        smartphone.sendMessage("89159951911", "Point five — mine the button!");
+        System.out.println(smartphone.getOperatingSystem());
+        smartphone.isHas5G();
+        smartphone.isHasStereoSpeakers();
+        smartphone.isHasWaterProtection();
+
+        // LaptopComputer
+        laptop.turnOn();
+        laptop.runProgram("IntelliJ IDEA");
+        laptop.improvementRAM(1);
+        laptop.upgradeRAM(16);
+        laptop.checkStorage();
+
+
+        // GamingLaptop
+        gamingLaptop.turnOn();
+        gamingLaptop.playGame("Beholder");
+        gamingLaptop.enableRGBKeyboard();
+        gamingLaptop.checkPerformance();
+        gamingLaptop.displayInfo();
+
+        System.out.println(tmp);
+        System.out.println(smartphone);
+        System.out.println(laptop);
+        System.out.println(gamingLaptop);
+    }
+}
+
+class Device {
+    // Атрибуты
+    private final String brand;       // Марка
+    private final String model;       // Модель
+    private final double price;       // Цена
+    private boolean status;           // Работает-не работает
+
+    // Конструктор
+    public Device(String brand, String model, double price, boolean status) {
+        this.brand = brand;
+        this.model = model;
+        this.price = price;
+        this.status = status;
+    }
+
+    public Device(String brand, String model, double price) {
+        this.brand = brand;
+        this.model = model;
+        this.price = price;
+        this.status = false;
+    }
+
+    // Методы
+    public void turnOn() {
+        System.out.println("Устройство " + brand + " " + model + " включено.");
+        status = true;
+    }
+
+    public void turnOff() {
+        System.out.println("Устройство " + brand + " " + model + " выключено.");
+        status = false;
+    }
+    
+    public void displayInfo() {
+        String result = "Бренд: " + brand + ", Модель: " + model + ", Цена: $" + price + ", Статус: ";
+        if (status){
+            result += "включен.";
+        }
+        else {
+            result += "выключен.";
+        }
+
+        System.out.println(result);
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public boolean getStatus() {
+        return status;
+    }
+
+    @Override
+    public String toString() {
+        return "ElectronicDevice {" +
+                "brand='" + brand + '\'' +
+                ", model='" + model + '\'' +
+                ", price=" + price + '\'' +
+                ", status=" + status +
+                '}';
+    }
+}
+
+class Smartphone extends Device {
+    // Атрибуты
+    private final String operatingSystem;
+    private final int batteryCapacity; // в mAh
+    private final boolean has5G;
+    private final boolean hasWaterProtection;
+    private final boolean hasStereoSpeakers;
+
+    // Конструктор
+    public Smartphone(String brand, String model, double price,
+                      String operatingSystem, int batteryCapacity, boolean has5G, boolean hasWaterProtection, boolean hasStereoSpeakers, boolean status) {
+        super(brand, model, price, status);
+        this.operatingSystem = operatingSystem;
+        this.batteryCapacity = batteryCapacity;
+        this.has5G = has5G;
+        this.hasWaterProtection = hasWaterProtection;
+        this.hasStereoSpeakers = hasStereoSpeakers;
+    }
+
+    // Методы
+    public void makeCall(String number) {
+        System.out.println("Звонок на номер " + number + " с телефона " + getBrand() + " " + getModel());
+    }
+
+    public void sendMessage(String number, String message) {
+        System.out.println("Отправлено сообщение на номер " + number + ": " + message);
+    }
+
+    public void checkBattery() {
+        System.out.println("Емкость батареи: " + batteryCapacity + " mAh");
+    }
+
+    public String getOperatingSystem() {
+        return operatingSystem;
+    }
+
+    public void isHasWaterProtection() {
+        String result = getModel();
+
+        if (hasWaterProtection){
+            result += " имеет защиту от воды.";
+        }
+        else{
+            result += " не имеет защиты от воды.";
+        }
+        System.out.println(result);
+    }
+
+    public void isHas5G() {
+        String result = getModel();
+
+        if (has5G){
+            result += " имеет 5G.";
+        }
+        else{
+            result += " не имеет 5G.";
+        }
+        System.out.println(result);
+    }
+
+    public void isHasStereoSpeakers() {
+        String result = getModel();
+
+        if (hasStereoSpeakers){
+            result += " имеет стереодинамики.";
+        }
+        else{
+            result += " не имеет стереодинамики.";
+        }
+        System.out.println(result);
+    }
+
+
+    @Override
+    public String toString() {
+        return "Smartphone {" +
+                "brand='" + getBrand() + '\'' +
+                ", model='" + getModel() + '\'' +
+                ", price=" + getPrice() +
+                ", operatingSystem='" + operatingSystem + '\'' +
+                ", batteryCapacity=" + batteryCapacity + '\'' +
+                ", has5G=" + has5G + '\'' +
+                ", hasWaterProtection=" + hasWaterProtection + '\'' +
+                ", hasStereoSpeakers=" + hasStereoSpeakers + '\'' +
+                '}';
+    }
+}
+
+
+class LaptopComputer extends Device {
+    // Атрибуты
+    private final String processor;
+    private int ramSize; // в GB
+    private final int storageSize; // в GB
+
+    // Конструктор
+    public LaptopComputer(String brand, String model, double price, String processor, int ramSize, int storageSize, boolean status) {
+        super(brand, model, price, status);
+        this.processor = processor;
+        this.ramSize = ramSize;
+        this.storageSize = storageSize;
+    }
+
+    // Методы
+    public void runProgram(String programName) {
+        System.out.println("Запуск программы " + programName + " на ноутбуке " + getBrand() + " " + getModel());
+    }
+
+    public void upgradeRAM(int additionalRAM) {
+        if (additionalRAM < 0){
+            additionalRAM = -(additionalRAM);
+        }
+        ramSize += additionalRAM;
+        System.out.println("Оперативная память увеличена до " + ramSize + " GB");
+    }
+
+    public void improvementRAM(int additionalRAM) {
+        if (additionalRAM < 0){
+            additionalRAM = -(additionalRAM);
+        }
+        ramSize -= additionalRAM;
+
+        if (ramSize < 0){
+            ramSize = 0;
+        }
+        System.out.println("Оперативная память сокращена до " + ramSize + " GB");
+    }
+
+    public void checkStorage() {
+        System.out.println("Объем памяти: " + storageSize + " GB");
+    }
+
+    public String getProcessor() {
+        return processor;
+    }
+
+    public int getRamSize() {
+        return ramSize;
+    }
+
+    @Override
+    public String toString() {
+        return "Laptop{" +
+                "brand='" + getBrand() + '\'' +
+                ", model='" + getModel() + '\'' +
+                ", price=" + getPrice() + '\'' +
+                ", processor='" + processor + '\'' +
+                ", ramSize=" + ramSize + '\'' +
+                ", storageSize=" + storageSize + '\'' +
+                ", status=" + +
+                '}';
+    }
+}
+
+class GamingLaptop extends LaptopComputer {
+    // Атрибуты
+    private final String graphicsCard;
+    private final boolean hasRGBKeyboard;
+    private final double screenRefreshRate; // в Hz
+
+    // Конструктор
+    public GamingLaptop(String brand, String model, double price, String processor, int ramSize, int storageSize,
+                        String graphicsCard, boolean hasRGBKeyboard, double screenRefreshRate, boolean status) {
+        super(brand, model, price, processor, ramSize, storageSize, status);
+        this.graphicsCard = graphicsCard;
+        this.hasRGBKeyboard = hasRGBKeyboard;
+        this.screenRefreshRate = screenRefreshRate;
+    }
+
+    // Методы
+    public void playGame(String gameName) {
+        System.out.println("Запуск игры " + gameName + " на игровом ноутбуке " + getBrand() + " " + getModel());
+    }
+
+    public void enableRGBKeyboard() {
+        if (hasRGBKeyboard) {
+            System.out.println("RGB-подсветка клавиатуры включена.");
+        } else {
+            System.out.println("RGB-подсветка клавиатуры отсутствует.");
+        }
+    }
+
+    public void checkPerformance() {
+        System.out.println("Производительность: " + getProcessor() + ", " + getRamSize() + " GB RAM, " + graphicsCard);
+    }
+
+    public String getGraphicsCard() {
+        return graphicsCard;
+    }
+
+    public double getScreenRefreshRate() {
+        return screenRefreshRate;
+    }
+
+    public void displayInfo(){
+        String result = "Graphics card - " + getGraphicsCard() +
+                ", Screen Refresh Rate -" + getScreenRefreshRate();
+        System.out.println(result);
+    }
+    @Override
+    public String toString() {
+        return "GamingLaptop {" +
+                "brand='" + getBrand() + '\'' +
+                ", model='" + getModel() + '\'' +
+                ", price=" + getPrice() +
+                ", processor='" + getProcessor() + '\'' +
+                ", ramSize=" + getRamSize() +
+                ", graphicsCard='" + graphicsCard + '\'' +
+                ", hasRGBKeyboard=" + hasRGBKeyboard +
+                ", screenRefreshRate=" + screenRefreshRate +
+                '}';
+    }
+}
+
+

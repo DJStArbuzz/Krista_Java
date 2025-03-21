@@ -9,16 +9,15 @@
 Прошу учитывать, что это пока не лабораторная работа, а лишь подготовка к ней (но проверю у всех))
 Желаю успехов и жду завтра.
  */
-
 public class Mains {
     public static void main(String[] args) {
         // Создаем объекты
         Device tmp = new Device("brand", "model", 0);
-        Smartphone smartphone = new Smartphone("Apple", "iPhone 15", 999.99, "iOS", 4000, true, false, true, false);
-        LaptopComputer laptop = new LaptopComputer("Dell", "XPS 15", 1499.99, "Intel i7", 16, 512, false);
-        GamingLaptop gamingLaptop = new GamingLaptop("Asus", "ROG Zephyrus", 2499.99, "AMD Ryzen 9", 32, 1000,
-                "NVIDIA RTX 3080", true, 165.0, false);
-
+        Smartphone smartphone = new Smartphone("Samsung", "Galaxy S24 FE", 20000, "iOS", 4000, true, false, true, false);
+        LaptopComputer laptop = new LaptopComputer("HUAWEI", "MateBook D MDF-X", 75000, "\n" +
+                "Intel Core i3 1215U", 8, 512, true, false);
+        GamingLaptop gamingLaptop = new GamingLaptop("Asus", "ROG Zephyrus", 80000, "AMD Ryzen 9", 32, 1000,
+                "NVIDIA RTX 3080", 165.0, true, true, false);
 
         // Device
         tmp.displayInfo();
@@ -32,7 +31,7 @@ public class Mains {
         smartphone.checkBattery();
         smartphone.sendMessage("89159951911", "Point five — mine the button!");
         System.out.println(smartphone.getOperatingSystem());
-        smartphone.isHas5G();
+        smartphone.isHasBiometricProtection();
         smartphone.isHasStereoSpeakers();
         smartphone.isHasWaterProtection();
 
@@ -42,7 +41,6 @@ public class Mains {
         laptop.improvementRAM(1);
         laptop.upgradeRAM(16);
         laptop.checkStorage();
-
 
         // GamingLaptop
         gamingLaptop.turnOn();
@@ -58,6 +56,10 @@ public class Mains {
     }
 }
 
+/**
+ * Класс, представляющий электронное устройство с базовыми характеристиками и
+ * управлением статусом [ВКЛ-ВЫКЛ].
+ */
 class Device {
     // Атрибуты
     private final String brand;       // Марка
@@ -65,7 +67,6 @@ class Device {
     private final double price;       // Цена
     private boolean status;           // Работает-не работает
 
-    // Конструктор
     public Device(String brand, String model, double price, boolean status) {
         this.brand = brand;
         this.model = model;
@@ -80,17 +81,28 @@ class Device {
         this.status = false;
     }
 
-    // Методы
+    /**
+     * Включает устройство и обновляет статус.
+     * Выводит сообщение формата: "Устройство [марка] [модель] включено."
+     */
     public void turnOn() {
         System.out.println("Устройство " + brand + " " + model + " включено.");
         status = true;
     }
 
+    /**
+     * Выключает устройство и обновляет статус.
+     * Выводит сообщение формата: "Устройство [марка] [модель] выключено."
+     */
     public void turnOff() {
         System.out.println("Устройство " + brand + " " + model + " выключено.");
         status = false;
     }
-    
+
+    /**
+     * Выводит в консоль полную информацию об устройстве в формате:
+     * "Бренд: [марка], Модель: [модель], Цена: $[цена], Статус: [включен/выключен]"
+     */
     public void displayInfo() {
         String result = "Бренд: " + brand + ", Модель: " + model + ", Цена: $" + price + ", Статус: ";
         if (status){
@@ -103,25 +115,33 @@ class Device {
         System.out.println(result);
     }
 
+    /** @return марка устройства */
     public String getBrand() {
         return brand;
     }
 
+    /** @return модель устройства */
     public String getModel() {
         return model;
     }
 
+    /** @return цена устройства */
     public double getPrice() {
         return price;
     }
 
+    /** @return текущий статус устройства */
     public boolean getStatus() {
         return status;
     }
 
+    /**
+     * Возвращает строковое представление объекта.
+     * @return строка в формате: "Device {brand='[марка]', model='[модель]', price=[цена], status=[статус]}"
+     */
     @Override
     public String toString() {
-        return "ElectronicDevice {" +
+        return "Device {" +
                 "brand='" + brand + '\'' +
                 ", model='" + model + '\'' +
                 ", price=" + price + '\'' +
@@ -130,42 +150,60 @@ class Device {
     }
 }
 
+/**
+ * Класс, представляющий смартфон, наследующий базовые характеристики от Device
+ * и добавляющий специфичные для смартфонов атрибуты.
+ */
 class Smartphone extends Device {
     // Атрибуты
-    private final String operatingSystem;
-    private final int batteryCapacity; // в mAh
-    private final boolean has5G;
-    private final boolean hasWaterProtection;
-    private final boolean hasStereoSpeakers;
+    private final String operatingSystem;              // операционная система
+    private final int batteryCapacity;                 // емкость аккумулятора
+    private final boolean hasBiometricProtection;      // наличие биометрической защиты
+    private final boolean hasWaterProtection;          // наличие защиты от воды
+    private final boolean hasStereoSpeakers;           // наличие стереодинамиков
 
-    // Конструктор
     public Smartphone(String brand, String model, double price,
-                      String operatingSystem, int batteryCapacity, boolean has5G, boolean hasWaterProtection, boolean hasStereoSpeakers, boolean status) {
+                      String operatingSystem, int batteryCapacity, boolean hasBiometricProtection, boolean hasWaterProtection, boolean hasStereoSpeakers, boolean status) {
         super(brand, model, price, status);
         this.operatingSystem = operatingSystem;
         this.batteryCapacity = batteryCapacity;
-        this.has5G = has5G;
+        this.hasBiometricProtection = hasBiometricProtection;
         this.hasWaterProtection = hasWaterProtection;
         this.hasStereoSpeakers = hasStereoSpeakers;
     }
 
-    // Методы
+    /**
+     * Совершает имитацию звонка на указанный номер.
+     * @param number телефонный номер для звонка
+     */
     public void makeCall(String number) {
         System.out.println("Звонок на номер " + number + " с телефона " + getBrand() + " " + getModel());
     }
 
+    /**
+     * Отправляет текстовое сообщение на указанный номер.
+     * @param number телефонный номер
+     * @param message текст сообщения
+     */
     public void sendMessage(String number, String message) {
         System.out.println("Отправлено сообщение на номер " + number + ": " + message);
     }
 
+
+    /** Выводит в консоль информацию о емкости батареи. */
     public void checkBattery() {
         System.out.println("Емкость батареи: " + batteryCapacity + " mAh");
     }
 
+    /** @return название операционной системы */
     public String getOperatingSystem() {
         return operatingSystem;
     }
 
+    /**
+     * Проверяет наличие водозащиты и выводит результат в консоль.
+     * Формат: "[Модель] имеет/не имеет защиты от воды."
+     */
     public void isHasWaterProtection() {
         String result = getModel();
 
@@ -178,18 +216,26 @@ class Smartphone extends Device {
         System.out.println(result);
     }
 
-    public void isHas5G() {
+    /**
+     * Проверяет наличие биометрической защиты и выводит результат в консоль.
+     * Формат: "[Модель] имеет/не имеет биометрическую защиту."
+     */
+    public void isHasBiometricProtection() {
         String result = getModel();
 
-        if (has5G){
-            result += " имеет 5G.";
+        if (hasBiometricProtection){
+            result += " имеет биометрическую защиту.";
         }
         else{
-            result += " не имеет 5G.";
+            result += " не имеет биометрическую защиту.";
         }
         System.out.println(result);
     }
 
+    /**
+     * Проверяет наличие стереодинамиков и выводит результат в консоль.
+     * Формат: "[Модель] имеет/не имеет стереодинамики."
+     */
     public void isHasStereoSpeakers() {
         String result = getModel();
 
@@ -202,7 +248,13 @@ class Smartphone extends Device {
         System.out.println(result);
     }
 
-
+    /**
+     * Возвращает строковое представление смартфона.
+     * @return строка в формате:
+     * "Smartphone {brand='[марка]', model='[модель]', price=[цена], operatingSystem='[ОС]',
+     * batteryCapacity=[емкость батареи], hasBiometricProtection=[наличие биометрической защиты],
+     * hasWaterProtection=[наличие защиты от воды], hasStereoSpeakers=[наличе стереодинамиков]}"
+     */
     @Override
     public String toString() {
         return "Smartphone {" +
@@ -210,8 +262,8 @@ class Smartphone extends Device {
                 ", model='" + getModel() + '\'' +
                 ", price=" + getPrice() +
                 ", operatingSystem='" + operatingSystem + '\'' +
-                ", batteryCapacity=" + batteryCapacity + '\'' +
-                ", has5G=" + has5G + '\'' +
+                ", batteryCapacity=" + batteryCapacity +
+                ", hasBiometricProtection=" + hasBiometricProtection + '\'' +
                 ", hasWaterProtection=" + hasWaterProtection + '\'' +
                 ", hasStereoSpeakers=" + hasStereoSpeakers + '\'' +
                 '}';
@@ -221,23 +273,33 @@ class Smartphone extends Device {
 
 class LaptopComputer extends Device {
     // Атрибуты
-    private final String processor;
-    private int ramSize; // в GB
-    private final int storageSize; // в GB
+    private final String processor;    // процессор
+    private int ramSize;               // размер оперативной памяти (GB)
+    private final int storageSize;     // объем внутреннего ххранилища (GB)
+    private final boolean hasBluetooth;      // наличие Bluetooth
 
     // Конструктор
-    public LaptopComputer(String brand, String model, double price, String processor, int ramSize, int storageSize, boolean status) {
+    public LaptopComputer(String brand, String model, double price, String processor, int ramSize, int storageSize, boolean hasBluetooth, boolean status) {
         super(brand, model, price, status);
         this.processor = processor;
         this.ramSize = ramSize;
         this.storageSize = storageSize;
+        this.hasBluetooth = hasBluetooth;
     }
 
-    // Методы
+    /**
+     * Запускает программу на ноутбуке.
+     * @param programName название запускаемой программы
+     */
     public void runProgram(String programName) {
         System.out.println("Запуск программы " + programName + " на ноутбуке " + getBrand() + " " + getModel());
     }
 
+    /**
+     * Увеличивает объем оперативной памяти.
+     * @param additionalRAM добавляемый объем RAM (GB).
+     *        При отрицательном значении берется модуль числа.
+     */
     public void upgradeRAM(int additionalRAM) {
         if (additionalRAM < 0){
             additionalRAM = -(additionalRAM);
@@ -246,6 +308,12 @@ class LaptopComputer extends Device {
         System.out.println("Оперативная память увеличена до " + ramSize + " GB");
     }
 
+    /**
+     * Уменьшает объем оперативной памяти.
+     * @param additionalRAM вычитаемый объем RAM (GB).
+     *        При отрицательном значении берется модуль числа.
+     *        Минимальный размер RAM - 0 GB.
+     */
     public void improvementRAM(int additionalRAM) {
         if (additionalRAM < 0){
             additionalRAM = -(additionalRAM);
@@ -258,52 +326,74 @@ class LaptopComputer extends Device {
         System.out.println("Оперативная память сокращена до " + ramSize + " GB");
     }
 
+    /** Выводит в консоль информацию об объеме хранилища. */
     public void checkStorage() {
         System.out.println("Объем памяти: " + storageSize + " GB");
     }
 
+    /** @return модель процессора */
     public String getProcessor() {
         return processor;
     }
 
+    /** @return текущий размер оперативной памяти */
     public int getRamSize() {
         return ramSize;
     }
 
+    /** @return наличие / отсутсвие Bluetooth */
+    public boolean isHasBluetooth(){
+        return hasBluetooth;
+    }
+    /**
+     * Возвращает строковое представление смартфона.
+     * @return строка в формате:
+     * "Laptop {brand='[марка]', model='[модель]', price=[цена], processor='[процессор]',
+     * ramSize=[размер оперативной памяти, GB], storageSize=[объем внутреннего ххранилища, GB],
+     * status=[ВКЛ-ВЫКЛ], hasBluetooth=[наличие/отсутсвие Bluetooth]}"
+     */
     @Override
     public String toString() {
-        return "Laptop{" +
+        return "Laptop {" +
                 "brand='" + getBrand() + '\'' +
                 ", model='" + getModel() + '\'' +
-                ", price=" + getPrice() + '\'' +
+                ", price=" + getPrice() +
                 ", processor='" + processor + '\'' +
-                ", ramSize=" + ramSize + '\'' +
-                ", storageSize=" + storageSize + '\'' +
-                ", status=" + +
+                ", ramSize=" + ramSize +
+                ", storageSize=" + storageSize +
+                ", status=" + getStatus() +
+                ", hasBluetooth=" + hasBluetooth +
                 '}';
     }
 }
 
 class GamingLaptop extends LaptopComputer {
     // Атрибуты
-    private final String graphicsCard;
-    private final boolean hasRGBKeyboard;
-    private final double screenRefreshRate; // в Hz
+    private final String graphicsCard;      // видеокарта
+    private final double screenRefreshRate; // частота обновления, Hg
+    private final boolean hasRGBKeyboard;   // наличие клавиуатуры с RGB подсветкой
 
     // Конструктор
     public GamingLaptop(String brand, String model, double price, String processor, int ramSize, int storageSize,
-                        String graphicsCard, boolean hasRGBKeyboard, double screenRefreshRate, boolean status) {
-        super(brand, model, price, processor, ramSize, storageSize, status);
+                        String graphicsCard, double screenRefreshRate, boolean hasRGBKeyboard, boolean hasBluetooth, boolean status) {
+        super(brand, model, price, processor, ramSize, storageSize, status, hasBluetooth);
         this.graphicsCard = graphicsCard;
-        this.hasRGBKeyboard = hasRGBKeyboard;
         this.screenRefreshRate = screenRefreshRate;
+        this.hasRGBKeyboard = hasRGBKeyboard;
     }
 
-    // Методы
+    /**
+     * Запускает игру на устройстве.
+     * @param gameName название игры
+     */
     public void playGame(String gameName) {
         System.out.println("Запуск игры " + gameName + " на игровом ноутбуке " + getBrand() + " " + getModel());
     }
 
+    /**
+     * Активирует RGB-подсветку клавиатуры (если поддерживается).
+     * Выводит сообщение о результате операции.
+     */
     public void enableRGBKeyboard() {
         if (hasRGBKeyboard) {
             System.out.println("RGB-подсветка клавиатуры включена.");
@@ -312,23 +402,36 @@ class GamingLaptop extends LaptopComputer {
         }
     }
 
+    /** Выводит в консоль информацию о производительности устройства. */
     public void checkPerformance() {
         System.out.println("Производительность: " + getProcessor() + ", " + getRamSize() + " GB RAM, " + graphicsCard);
     }
 
+    /** @return модель видеокарты */
     public String getGraphicsCard() {
         return graphicsCard;
     }
 
+    /** @return частота обновления экрана */
     public double getScreenRefreshRate() {
         return screenRefreshRate;
     }
 
+    /** Выводит расширенную информацию о характеристиках устройства. */
     public void displayInfo(){
-        String result = "Graphics card - " + getGraphicsCard() +
-                ", Screen Refresh Rate -" + getScreenRefreshRate();
+        String result = "Видеокарта - " + getGraphicsCard() +
+                ", расширение экрана -" + getScreenRefreshRate();
         System.out.println(result);
     }
+
+    /**
+     * Возвращает строковое представление игрового ноутбука.
+     * @return строка в формате:
+     * "GamingLaptop {brand='[марка]', model='[модель]', price=[цена], processor='[процессор]',
+     * ramSize=[размер оперативной памяти, GB], storageSize=[объем хранилища, GB],
+     * graphicsCard='[видеокарта]', hasRGBKeyboard=[наличие RGB],
+     * screenRefreshRate=[частота обновления, Hz], status=[ВКЛ-ВЫКЛ]}"
+     */
     @Override
     public String toString() {
         return "GamingLaptop {" +
@@ -340,8 +443,8 @@ class GamingLaptop extends LaptopComputer {
                 ", graphicsCard='" + graphicsCard + '\'' +
                 ", hasRGBKeyboard=" + hasRGBKeyboard +
                 ", screenRefreshRate=" + screenRefreshRate +
+                ", status=" + getStatus() +
+                ", hasBluetooth=" + isHasBluetooth() +
                 '}';
     }
 }
-
-
